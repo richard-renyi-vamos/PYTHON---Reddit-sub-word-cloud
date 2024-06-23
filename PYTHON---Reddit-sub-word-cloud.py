@@ -1,4 +1,6 @@
 import praw
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 # Reddit API credentials
 reddit = praw.Reddit(
@@ -16,3 +18,15 @@ top_posts = subreddit.top(limit=100)
 post_titles = []
 for post in top_posts:
     post_titles.append(post.title)
+
+# Combine the titles into a single text blob
+text = ' '.join(post_titles)
+
+# Create the word cloud
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+
+# Display the word cloud
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
